@@ -12,7 +12,7 @@
 
 <meta name="author" content="Longhai Li and Steven Liu" />
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-08" />
 
 <title>Multi-logit Regression with Simulated Data</title>
 
@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">Multi-logit Regression with Simulated Data</h1>
 <h4 class="author">Longhai Li and Steven Liu</h4>
-<h4 class="date">2019-09-30</h4>
+<h4 class="date">2019-10-08</h4>
 
 </div>
 
@@ -471,7 +471,7 @@ system.time(
   fit.t &lt;- htlr(dat$x.tr, dat$y.tr)
 )
 #&gt;    user  system elapsed 
-#&gt; 103.151   0.199  19.022
+#&gt; 111.950   0.175  20.913
 print(fit.t)
 #&gt; Fitted HTLR model 
 #&gt; 
@@ -500,7 +500,7 @@ system.time(
                  iter = 4000, init = &quot;bcbc&quot;)
 )
 #&gt;    user  system elapsed 
-#&gt; 162.100   0.983  28.884
+#&gt; 159.698   0.447  28.243
 print(fit.t2)
 #&gt; Fitted HTLR model 
 #&gt; 

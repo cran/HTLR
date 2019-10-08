@@ -1,6 +1,6 @@
-2a8a09f160ad77722fa04d3bf7199fab *DESCRIPTION
+7ac960b94d228b472fa1f2c80e2d6f0b *DESCRIPTION
 8446cfe33e86e65401d5f162c4cf876c *NAMESPACE
-3ca93d91dd12e7ded03d020d1c2c7fd5 *NEWS.md
+7a2984403557450b8788f9e7a9c76b46 *NEWS.md
 2449a40dc83417e24fe87ab844229565 *R/HTLR-package.R
 8c37476b6f87777fa702bb06d1c6eaac *R/RcppExports.R
 3a2eac117b20f8f72f2c791a3b9b868b *R/bcbcsf.r
@@ -14,13 +14,13 @@ c4454b12ce7a33fa77f5c947b90fba6f *R/lassorda.r
 03012f1507d5106d6c3105cfb2bd55c1 *R/mccoef.r
 c939692a0ed578360ff0b5ed705f77b5 *R/predict.R
 51763492c7c58c73818cbd0f412e3e58 *R/util.r
-57938214a03358c1a12c5540ceefa012 *README.md
+62e1289f8bbec2b425074e56f3509fee *README.md
 22b2f8a1120b09698a8edf68eaa4d181 *build/vignette.rds
 97b93ebebcd4f9b5824f5fea0092a76d *data/colon.rda
 c6d60832753fb714e68f78ad6e0d6d42 *inst/CITATION
 5e15b9a8003d9bdc03ffa81bedad4e67 *inst/doc/simu.R
 7840a1d925fe9f7f883f2d60340363b0 *inst/doc/simu.Rmd
-eceb6fb4bafee087952c41da411790a5 *inst/doc/simu.html
+7a7568d80bcfa8e18150dd58626acce9 *inst/doc/simu.html
 40ffad89e9b29ce794e3f53f1de2e08a *inst/install_old_htlr.sh
 7a1929ec8ecffebea3601afa3e66d31c *man/HTLR-package.Rd
 9c877a23619091c6ae92478dcbe86c16 *man/as.matrix.htlrfit.Rd
@@ -42,7 +42,7 @@ def59d1bbf5325921e7afb66217847ea *man/pipe.Rd
 72294d43d437addfd767804a44d6826a *src/Makevars
 72294d43d437addfd767804a44d6826a *src/Makevars.win
 7442e69e526b10554d33a677b260ae57 *src/RcppExports.cpp
-7bfd9121005630f18513b9fa5466211a *src/ars.cpp
+69d985eab9970f137f6cd51865c44a36 *src/ars.cpp
 47c2f7b1e798c03c51fe875d6ab62368 *src/ars.h
 c07d4757ffb9263a9575bf66d6bd75ff *src/ars_demo.cpp
 04340557e3713e124930b219d990eb5b *src/gibbs.cpp
