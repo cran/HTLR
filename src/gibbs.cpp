@@ -2,25 +2,25 @@
 #include "gibbs.h"
 
 Fit::Fit(int p, int K, int n,
-         arma::mat &X, arma::mat &ymat, arma::uvec &ybase,
+         const arma::mat &X, const arma::mat &ymat, const arma::uvec &ybase,
          std::string ptype, double alpha, double s, double eta,
          int iters_rmc, int iters_h, int thin,
          int leap_L, int leap_L_h, double leap_step,
-         double hmc_sgmcut, arma::vec &DDNloglike_,
-         arma::mat &deltas, double logw, arma::vec &sigmasbt,
-         int silence, bool legacy)
+         double hmc_sgmcut, const arma::mat &deltas, 
+         const arma::vec &sigmasbt, int silence, bool legacy)
     : p_(p), K_(K), C_(K + 1), n_(n), X_(X), ymat_(ymat), ybase_(ybase),
       ptype_(ptype), alpha_(alpha), s_(s), eta_(eta),
       iters_rmc_(iters_rmc), iters_h_(iters_h), thin_(thin),
       leap_L_(leap_L), leap_L_h_(leap_L_h), leap_step_(leap_step),
-      DDNloglike_(DDNloglike_), silence_(silence), 
-      legacy_(legacy), nvar_(p + 1), logw_(logw)
+      sgmsq_cut_(hmc_sgmcut > 0 ? R_pow_di(hmc_sgmcut, 2) : hmc_sgmcut),
+      DDNloglike_(col_sum(arma::square(X)) / 4), 
+      silence_(silence), legacy_(legacy), nvar_(p + 1), logw_(s)
 {
   ids_update_ = arma::uvec(nvar_, arma::fill::zeros);
   ids_fix_ = arma::uvec(nvar_, arma::fill::zeros);
 
   mc_logw_ = arma::vec(iters_rmc + 1, arma::fill::zeros);
-  mc_logw_[0] = logw;
+  mc_logw_[0] = logw_;
   
   sigmasbt_ = sigmasbt;
   mc_sigmasbt_ = arma::mat(nvar_, iters_rmc + 1, arma::fill::zeros);
@@ -47,8 +47,6 @@ Fit::Fit(int p, int K, int n,
   sum_deltas_ = arma::vec(nvar_, arma::fill::zeros);
   var_deltas_ = arma::vec(nvar_, arma::fill::zeros);
   step_sizes_ = arma::vec(nvar_, arma::fill::zeros);
-
-  sgmsq_cut_ = hmc_sgmcut > 0 ? R_pow_di(hmc_sgmcut, 2) : hmc_sgmcut;
 }
 
 void Fit::StartSampling()
@@ -169,18 +167,6 @@ void Fit::WhichUpdate(bool init)
       ids_fix_(nfvar_++) = j;
   }
   iup_ = ids_update_.head(nuvar_); // save a quick reference 
-}
-
-// Get int vector ids_update of length nuvar. 
-arma::uvec Fit::GetIdsUpdate()
-{
-  return iup_;
-}
-
-// Get int vector ids_fix of length nfvar.
-arma::uvec Fit::GetIdsFix()
-{
-  return ids_fix_.head(nfvar_);
 }
 
 // X: n * nvar
@@ -496,21 +482,21 @@ void Fit::UpdateStepSizes()
 
 void Fit::CacheOldValues()
 {
-  lv_old_ = copy(lv_);
-  pred_prob_old_ = copy(pred_prob_);
-  deltas_old_ = copy(deltas_);
-  DNlogprior_old_ = copy(DNlogprior_);
-  var_deltas_old_ = copy(var_deltas_);
+  lv_old_ = lv_;
+  pred_prob_old_ = pred_prob_;
+  deltas_old_ = deltas_;
+  DNlogprior_old_ = DNlogprior_;
+  var_deltas_old_ = var_deltas_;
   loglike_old_ = loglike_;
 }
 
 void Fit::RestoreOldValues()
 {
-  lv_ = copy(lv_old_);
-  pred_prob_ = copy(pred_prob_old_);
-  deltas_ = copy(deltas_old_);
-  DNlogprior_ = copy(DNlogprior_old_);
-  var_deltas_ = copy(var_deltas_old_);
+  lv_ = lv_old_;
+  pred_prob_ = pred_prob_old_;
+  deltas_ = deltas_old_;
+  DNlogprior_ = DNlogprior_old_;
+  var_deltas_ = var_deltas_old_;
   loglike_ = loglike_old_;
 }
 

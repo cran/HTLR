@@ -4,13 +4,32 @@
 \alias{htlr_fit}
 \title{Fit a HTLR Model (Internal API)}
 \usage{
-htlr_fit(X_tr, y_tr, fsel = 1:ncol(X_tr), stdzx = TRUE,
-  ptype = c("t", "ghs", "neg"), sigmab0 = 2000, alpha = 1, s = -10,
-  eta = 0, iters_h = 1000, iters_rmc = 1000, thin = 1,
-  leap_L = 50, leap_L_h = 5, leap_step = 0.3, hmc_sgmcut = 0.05,
-  initial_state = "lasso", silence = TRUE, pre.legacy = TRUE,
-  alpha.rda = 0.2, lasso.lambda = seq(0.05, 0.01, by = -0.01),
-  X_ts = NULL, predburn = NULL, predthin = 1)
+htlr_fit(
+  X_tr,
+  y_tr,
+  fsel = 1:ncol(X_tr),
+  stdzx = TRUE,
+  ptype = c("t", "ghs", "neg"),
+  sigmab0 = 2000,
+  alpha = 1,
+  s = -10,
+  eta = 0,
+  iters_h = 1000,
+  iters_rmc = 1000,
+  thin = 1,
+  leap_L = 50,
+  leap_L_h = 5,
+  leap_step = 0.3,
+  hmc_sgmcut = 0.05,
+  initial_state = "lasso",
+  silence = TRUE,
+  pre.legacy = TRUE,
+  alpha.rda = 0.2,
+  lasso.lambda = seq(0.05, 0.01, by = -0.01),
+  X_ts = NULL,
+  predburn = NULL,
+  predthin = 1
+)
 }
 \arguments{
 \item{X_tr}{Input matrix, of dimension nobs by nvars; each row is an observation vector.}
@@ -86,7 +105,7 @@ Markov chain (super)iterations will be discarded, and only every \code{predthin}
 }
 \value{
 A list of fitting results. If \code{X_ts} is not provided, the list is an object 
-with S3 class \code{htlrfit}.
+with S3 class \code{htlr.fit}.
 }
 \description{
 This function trains linear logistic regression models with HMC in restricted Gibbs sampling.

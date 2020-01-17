@@ -23,8 +23,11 @@
 #' 
 #' @param cut The coefficients smaller than this criteria will be fixed in each HMC updating step.
 #' 
-#' @param init The initial state of Markov Chain; can be a previously fitted \code{fithtlr} object, 
-#' or a user supplied initial state vector, or a character string matches the following:  
+#' @param init The initial state of Markov Chain; it accepts three forms:
+#' \itemize{ 
+#' \item a previously fitted \code{fithtlr} object, 
+#' \item  a user supplied initial coeficient matrix of (p+1)*K, where p is the number of features, K is the number of classes in y minus 1, 
+#' \item a character string matches the following:  
 #' \itemize{
 #'   \item "lasso" - (Default) Use Lasso initial state with \code{lambda} chosen by 
 #'   cross-validation. Users may specify their own candidate \code{lambda} values via 
@@ -36,6 +39,8 @@
 #'   initial states can be used for continuous features such as gene expression profiles, 
 #'   but it should not be used for categorical features such as SNP profiles.
 #'   \item "random" - Use random initial values sampled from N(0, 1).     
+#' }
+#' 
 #' }
 #' 
 #' @param prior The prior to be applied to the model. Either a list of hyperparameter settings 
@@ -58,7 +63,7 @@
 #'   Default: \{.01, .02, \ldots, .05\}. Will be ignored if \code{pre.legacy} is set to \code{TRUE}.
 #' } 
 #' 
-#' @return An object with S3 class \code{htlrfit}.  
+#' @return An object with S3 class \code{htlr.fit}.  
 #' 
 #' @references
 #' Longhai Li and Weixin Yao (2018). Fully Bayesian Logistic Regression 
@@ -128,6 +133,7 @@ htlr <-
   if (is.character(prior))
     prior <- htlr_prior(prior, df)
   
+  # htlr_fit() will take care of input checking
   htlr_fit(X_tr = X, y_tr = y, fsel = fsel, stdzx = stdx, 
            ptype = prior$ptype, alpha = prior$alpha, s = prior$logw, 
            #eta = prior$eta, 

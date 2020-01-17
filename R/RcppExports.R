@@ -13,8 +13,8 @@ sample_trunc_beta <- function(n, alpha, beta, lb = 0, ub = 1, verbose = FALSE) {
     .Call('_HTLR_sample_trunc_beta', PACKAGE = 'HTLR', n, alpha, beta, lb, ub, verbose)
 }
 
-htlr_fit_helper <- function(p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, DDNloglike, deltas, logw, sigmasbt, silence, legacy) {
-    .Call('_HTLR_htlr_fit_helper', PACKAGE = 'HTLR', p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, DDNloglike, deltas, logw, sigmasbt, silence, legacy)
+htlr_fit_helper <- function(p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, deltas, sigmasbt, silence, legacy) {
+    .Call('_HTLR_htlr_fit_helper', PACKAGE = 'HTLR', p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, deltas, sigmasbt, silence, legacy)
 }
 
 log_sum_exp <- function(A) {
@@ -23,5 +23,25 @@ log_sum_exp <- function(A) {
 
 spl_sgm_ig <- function(alpha, K, w, vardeltas) {
     .Call('_HTLR_spl_sgm_ig', PACKAGE = 'HTLR', alpha, K, w, vardeltas)
+}
+
+std_helper <- function(A) {
+    .Call('_HTLR_std_helper', PACKAGE = 'HTLR', A)
+}
+
+comp_vardeltas <- function(deltas) {
+    .Call('_HTLR_comp_vardeltas', PACKAGE = 'HTLR', deltas)
+}
+
+comp_lsl <- function(A) {
+    .Call('_HTLR_comp_lsl', PACKAGE = 'HTLR', A)
+}
+
+log_normcons <- function(A) {
+    .Call('_HTLR_log_normcons', PACKAGE = 'HTLR', A)
+}
+
+gendata_FAM_helper <- function(n, muj, muj_rep, A, sd_g, stdx) {
+    .Call('_HTLR_gendata_FAM_helper', PACKAGE = 'HTLR', n, muj, muj_rep, A, sd_g, stdx)
 }
 

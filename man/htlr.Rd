@@ -4,10 +4,25 @@
 \alias{htlr}
 \title{Fit a HTLR Model}
 \usage{
-htlr(X, y, fsel = 1:ncol(X), stdx = TRUE, prior = "t", df = 1,
-  iter = 2000, warmup = floor(iter/2), thin = 1, init = "lasso",
-  leap = 50, leap.warm = floor(leap/10), leap.stepsize = 0.3,
-  cut = 0.05, verbose = FALSE, pre.legacy = FALSE, ...)
+htlr(
+  X,
+  y,
+  fsel = 1:ncol(X),
+  stdx = TRUE,
+  prior = "t",
+  df = 1,
+  iter = 2000,
+  warmup = floor(iter/2),
+  thin = 1,
+  init = "lasso",
+  leap = 50,
+  leap.warm = floor(leap/10),
+  leap.stepsize = 0.3,
+  cut = 0.05,
+  verbose = FALSE,
+  pre.legacy = FALSE,
+  ...
+)
 }
 \arguments{
 \item{X}{Input matrix, of dimension nobs by nvars; each row is an observation vector.}
@@ -34,8 +49,11 @@ The number of warmup iterations should not be larger than iter and the default i
 
 \item{thin}{A positive integer specifying the period for saving samples.}
 
-\item{init}{The initial state of Markov Chain; can be a previously fitted \code{fithtlr} object, 
-or a user supplied initial state vector, or a character string matches the following:  
+\item{init}{The initial state of Markov Chain; it accepts three forms:
+\itemize{ 
+\item a previously fitted \code{fithtlr} object, 
+\item  a user supplied initial coeficient matrix of (p+1)*K, where p is the number of features, K is the number of classes in y minus 1, 
+\item a character string matches the following:  
 \itemize{
   \item "lasso" - (Default) Use Lasso initial state with \code{lambda} chosen by 
   cross-validation. Users may specify their own candidate \code{lambda} values via 
@@ -47,6 +65,8 @@ or a user supplied initial state vector, or a character string matches the follo
   initial states can be used for continuous features such as gene expression profiles, 
   but it should not be used for categorical features such as SNP profiles.
   \item "random" - Use random initial values sampled from N(0, 1).     
+}
+
 }}
 
 \item{leap}{The length of leapfrog trajectory in sampling phase.}
@@ -71,7 +91,7 @@ multi-core machine. Default is \code{FALSE}.}
 }}
 }
 \value{
-An object with S3 class \code{htlrfit}.
+An object with S3 class \code{htlr.fit}.
 }
 \description{
 This function trains linear logistic regression models with HMC in restricted Gibbs sampling.

@@ -62,7 +62,7 @@
 #' \code{pre.legacy} is set to \code{TRUE}. 
 #' 
 #' @return A list of fitting results. If \code{X_ts} is not provided, the list is an object 
-#' with S3 class \code{htlrfit}.  
+#' with S3 class \code{htlr.fit}.  
 #' 
 #' @references
 #' Longhai Li and Weixin Yao (2018). Fully Bayesian Logistic Regression 
@@ -110,28 +110,39 @@ htlr_fit <- function (
   
   ## feature selection
   X_tr <- X_tr[, fsel, drop = FALSE]
-  names(fsel) <- colnames(X_tr) 
-  p <- length(fsel)
-  n <- nrow(X_tr)
+  names(fsel) <- colnames(X_tr)
   
   ## standardize selected features
   nuj <- rep(0, length(fsel))
   sdj <- rep(1, length(fsel))
-  if (stdzx == TRUE & !is.numeric(initial_state))
+  if (stdzx == TRUE)
   {
-    nuj <- apply(X_tr, 2, median)
-    sdj <- apply(X_tr, 2, sd)
-    X_tr <- sweep(X_tr, 2, nuj, "-")
-    X_tr <- sweep(X_tr, 2, sdj, "/")
+    if (is.numeric(initial_state))
+    {
+      message("skip standardizing features because customized initial state is provided")
+    }
+    else
+    {
+      X_tr <- std(X_tr)
+      nuj <- attr(X_tr, "center")
+      sdj <- attr(X_tr, "scale")
+      fsel <- fsel[attr(X_tr, "nonsingular")]
+    }
   }
-  
+  else
+  {
+    if (!is.matrix(X_tr)) {
+      message(sprintf("coercing %s 'X' to matrix", class(X_tr)))
+      X_tr <- as.matrix(X_tr) 
+    }
+  }
+  p <- ncol(X_tr)
+  n <- nrow(X_tr)
+
   ## add intercept
   X_addint <- cbind(1, X_tr)
   if (!is.null(colnames(X_tr)))
     colnames(X_addint) <- c("Intercept", colnames(X_tr))
-  
-  ## stepsize for HMC from data
-  DDNloglike <- 1 / 4 * colSums(X_addint ^ 2)
 
   #---------------------- Markov chain state initialization ----------------------#
 
@@ -180,23 +191,23 @@ htlr_fit <- function (
     vardeltas <- comp_vardeltas(deltas)[-1]
     sigmasbt <- c(sigmab0, spl_sgm_ig(alpha, K, exp(s), vardeltas))
   }
-    
+ 
   #-------------------------- Do Gibbs sampling --------------------------#
 
   fit <- htlr_fit_helper(
       ## data
       p = p, K = K, n = n,
-      X = as.matrix(X_addint), 
+      X = X_addint, 
       ymat = as.matrix(ymat), 
-      ybase = as.vector(ybase),
+      ybase = ybase,
       ## prior
       ptype = ptype, alpha = alpha, s = s, eta = eta,
       ## sampling
       iters_rmc = iters_rmc, iters_h = iters_h, thin = thin, 
       leap_L = leap_L, leap_L_h = leap_L_h, leap_step = leap_step, 
-      hmc_sgmcut = hmc_sgmcut, DDNloglike = as.vector(DDNloglike),
-      ## fit result
-      deltas = deltas, logw = s, sigmasbt = sigmasbt,
+      hmc_sgmcut = hmc_sgmcut,
+      ## init state
+      deltas = deltas, sigmasbt = sigmasbt,
       ## other control
       silence = as.integer(silence), legacy = pre.legacy)
   
@@ -214,7 +225,7 @@ htlr_fit <- function (
   fit$call <- match.call()
   
   # register S3
-  attr(fit, "class") <- "htlrfit"
+  attr(fit, "class") <- "htlr.fit"
         
   #---------------------- Prediction for test cases ----------------------#
   if (!is.null(X_ts))

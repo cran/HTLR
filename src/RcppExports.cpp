@@ -53,8 +53,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // htlr_fit_helper
-Rcpp::List htlr_fit_helper(int p, int K, int n, arma::mat& X, arma::mat& ymat, arma::uvec& ybase, std::string ptype, double alpha, double s, double eta, int iters_rmc, int iters_h, int thin, int leap_L, int leap_L_h, double leap_step, double hmc_sgmcut, arma::vec& DDNloglike, arma::mat& deltas, double logw, arma::vec& sigmasbt, int silence, bool legacy);
-RcppExport SEXP _HTLR_htlr_fit_helper(SEXP pSEXP, SEXP KSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ymatSEXP, SEXP ybaseSEXP, SEXP ptypeSEXP, SEXP alphaSEXP, SEXP sSEXP, SEXP etaSEXP, SEXP iters_rmcSEXP, SEXP iters_hSEXP, SEXP thinSEXP, SEXP leap_LSEXP, SEXP leap_L_hSEXP, SEXP leap_stepSEXP, SEXP hmc_sgmcutSEXP, SEXP DDNloglikeSEXP, SEXP deltasSEXP, SEXP logwSEXP, SEXP sigmasbtSEXP, SEXP silenceSEXP, SEXP legacySEXP) {
+Rcpp::List htlr_fit_helper(int p, int K, int n, arma::mat& X, arma::mat& ymat, arma::uvec& ybase, std::string ptype, double alpha, double s, double eta, int iters_rmc, int iters_h, int thin, int leap_L, int leap_L_h, double leap_step, double hmc_sgmcut, arma::mat& deltas, arma::vec& sigmasbt, int silence, bool legacy);
+RcppExport SEXP _HTLR_htlr_fit_helper(SEXP pSEXP, SEXP KSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ymatSEXP, SEXP ybaseSEXP, SEXP ptypeSEXP, SEXP alphaSEXP, SEXP sSEXP, SEXP etaSEXP, SEXP iters_rmcSEXP, SEXP iters_hSEXP, SEXP thinSEXP, SEXP leap_LSEXP, SEXP leap_L_hSEXP, SEXP leap_stepSEXP, SEXP hmc_sgmcutSEXP, SEXP deltasSEXP, SEXP sigmasbtSEXP, SEXP silenceSEXP, SEXP legacySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -75,13 +75,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type leap_L_h(leap_L_hSEXP);
     Rcpp::traits::input_parameter< double >::type leap_step(leap_stepSEXP);
     Rcpp::traits::input_parameter< double >::type hmc_sgmcut(hmc_sgmcutSEXP);
-    Rcpp::traits::input_parameter< arma::vec& >::type DDNloglike(DDNloglikeSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type deltas(deltasSEXP);
-    Rcpp::traits::input_parameter< double >::type logw(logwSEXP);
     Rcpp::traits::input_parameter< arma::vec& >::type sigmasbt(sigmasbtSEXP);
     Rcpp::traits::input_parameter< int >::type silence(silenceSEXP);
     Rcpp::traits::input_parameter< bool >::type legacy(legacySEXP);
-    rcpp_result_gen = Rcpp::wrap(htlr_fit_helper(p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, DDNloglike, deltas, logw, sigmasbt, silence, legacy));
+    rcpp_result_gen = Rcpp::wrap(htlr_fit_helper(p, K, n, X, ymat, ybase, ptype, alpha, s, eta, iters_rmc, iters_h, thin, leap_L, leap_L_h, leap_step, hmc_sgmcut, deltas, sigmasbt, silence, legacy));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -110,14 +108,79 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// std_helper
+Rcpp::List std_helper(const arma::mat& A);
+RcppExport SEXP _HTLR_std_helper(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(std_helper(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// comp_vardeltas
+arma::vec comp_vardeltas(const arma::mat& deltas);
+RcppExport SEXP _HTLR_comp_vardeltas(SEXP deltasSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type deltas(deltasSEXP);
+    rcpp_result_gen = Rcpp::wrap(comp_vardeltas(deltas));
+    return rcpp_result_gen;
+END_RCPP
+}
+// comp_lsl
+arma::vec comp_lsl(arma::mat& A);
+RcppExport SEXP _HTLR_comp_lsl(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(comp_lsl(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// log_normcons
+double log_normcons(arma::mat& A);
+RcppExport SEXP _HTLR_log_normcons(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(log_normcons(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// gendata_FAM_helper
+Rcpp::List gendata_FAM_helper(int n, arma::mat& muj, const arma::mat& muj_rep, const arma::mat& A, double sd_g, bool stdx);
+RcppExport SEXP _HTLR_gendata_FAM_helper(SEXP nSEXP, SEXP mujSEXP, SEXP muj_repSEXP, SEXP ASEXP, SEXP sd_gSEXP, SEXP stdxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type muj(mujSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type muj_rep(muj_repSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< double >::type sd_g(sd_gSEXP);
+    Rcpp::traits::input_parameter< bool >::type stdx(stdxSEXP);
+    rcpp_result_gen = Rcpp::wrap(gendata_FAM_helper(n, muj, muj_rep, A, sd_g, stdx));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_HTLR_sample_trunc_norm", (DL_FUNC) &_HTLR_sample_trunc_norm, 4},
     {"_HTLR_sample_post_ichi", (DL_FUNC) &_HTLR_sample_post_ichi, 6},
     {"_HTLR_sample_trunc_beta", (DL_FUNC) &_HTLR_sample_trunc_beta, 6},
-    {"_HTLR_htlr_fit_helper", (DL_FUNC) &_HTLR_htlr_fit_helper, 23},
+    {"_HTLR_htlr_fit_helper", (DL_FUNC) &_HTLR_htlr_fit_helper, 21},
     {"_HTLR_log_sum_exp", (DL_FUNC) &_HTLR_log_sum_exp, 1},
     {"_HTLR_spl_sgm_ig", (DL_FUNC) &_HTLR_spl_sgm_ig, 4},
+    {"_HTLR_std_helper", (DL_FUNC) &_HTLR_std_helper, 1},
+    {"_HTLR_comp_vardeltas", (DL_FUNC) &_HTLR_comp_vardeltas, 1},
+    {"_HTLR_comp_lsl", (DL_FUNC) &_HTLR_comp_lsl, 1},
+    {"_HTLR_log_normcons", (DL_FUNC) &_HTLR_log_normcons, 1},
+    {"_HTLR_gendata_FAM_helper", (DL_FUNC) &_HTLR_gendata_FAM_helper, 6},
     {NULL, NULL, 0}
 };
 
