@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# HTLR: Bayesian Logistic Regression with Heavy-tailed Priors
+## HTLR: Bayesian Logistic Regression with Heavy-tailed Priors
 
 <!-- badges: start -->
 
@@ -14,7 +14,7 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 Status](https://travis-ci.org/longhaiSK/HTLR.svg?branch=master)](https://travis-ci.org/longhaiSK/HTLR)
 <!-- badges: end -->
 
-`HTLR` performs classification and feature selection by fitting Bayesian
+*HTLR* performs classification and feature selection by fitting Bayesian
 polychotomous (multiclass, multinomial) logistic regression models based
 on heavy-tailed priors with small degree freedom. This package is
 suitable for classification with high-dimensional features, such as gene
@@ -42,16 +42,6 @@ Development version on [GitHub](https://github.com/):
 # install.packages("devtools")
 devtools::install_github("longhaiSK/HTLR")
 ```
-
-This package uses library [Armadillo](http://arma.sourceforge.net/) for
-carrying out most of matrix operations, you may get speed benefits from
-using an alternative BLAS library such as
-[ATLAS](http://math-atlas.sourceforge.net/),
-[OpenBLAS](http://www.openblas.net/) or [Intel
-MKL](https://software.intel.com/en-us/mkl). Check this
-[post](http://brettklamer.com/diversions/statistical/faster-blas-in-r/)
-for the comparision and the installation guide. Windows users may
-consider installing [Microsoft R Open](https://mran.microsoft.com/open).
 
 ## Reference
 
