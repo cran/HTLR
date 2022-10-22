@@ -1,5 +1,5 @@
 Package: HTLR
-Version: 0.4-3
+Version: 0.4-4
 Title: Bayesian Logistic Regression with Heavy-Tailed Priors
 Authors@R: c(person(given = "Longhai", family = "Li", role = c("aut", "cre"), email = "longhai@math.usask.ca",
     comment=c(ORCID="0000-0002-3074-8584")), person(given = "Steven", family = "Liu", role = c("aut"), 
@@ -22,11 +22,11 @@ NeedsCompilation: yes
 SystemRequirements: C++11
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr
-Packaged: 2020-09-08 21:24:59 UTC; xil
+Packaged: 2022-10-21 18:03:46 UTC; xil
 Author: Longhai Li [aut, cre] (<https://orcid.org/0000-0002-3074-8584>),
   Steven Liu [aut]
 Maintainer: Longhai Li <longhai@math.usask.ca>
 Repository: CRAN
-Date/Publication: 2020-09-09 04:20:02 UTC
+Date/Publication: 2022-10-22 12:47:53 UTC
